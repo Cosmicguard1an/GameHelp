@@ -13,17 +13,20 @@ var gold1,gold2,gold3,gold4,goldImg
 
 var cop1img, cop2img
 var cop1,cop2,cop3,cop4,cop5
+
 var laser1,laser2,laser3,laser4,laser5
 
 var robber,robberImg
 
 var offimg,onimg
+var switch1,switch2,switch3,switch4,switch5,switch6
 
 var diamondImg,diamond
 
 var gameState = 1
 
 var score = 0
+var lives = 3
 
 var sound1,sound2
 
@@ -38,7 +41,7 @@ function preload() {
 	diamondImg = loadImage("images/gemstone.png");
 
 	cop1img = loadImage("images/cop.png");
-	cop2img = loadImage("images/police cop 2.png");
+
 
 	sound1 = loadSound("sound.mp3");
 }
@@ -50,6 +53,14 @@ function setup() {
 	world = engine.world;
 
 	//Create the Bodies Here.
+
+	switch1 = createSprite(516,294,10,10);
+	switch2 = createSprite(602,294,10,10);
+	switch3 = createSprite(602,377,10,10);
+	switch4 = createSprite(516,377,10,10);
+	switch5 = createSprite(704,684,10,10);
+	switch6 = createSprite(612,684,10,10);
+
 	wall1 = createSprite(100,550,15,800);
 	wall2 = createSprite(585,943,635,15);
 	wall3 =	createSprite(900,550,15,800);
@@ -67,18 +78,24 @@ function setup() {
 	wall15 = createSprite(561,340,165,15);
 	wall16 = createSprite(561,340,15,165);
 	wall17 = createSprite(474,606,195,15);
+	wall18 = createSprite(724,368,15,50);
 
 	Engine.run(engine);
 	
 	robber = createSprite(195,205,10,10);
 
 	cop1 = createSprite(600,872,10,10);
-	cop2 = createSprite(451,862,10,10);
-	cop3 = createSprite(138,650,10,10);
-	cop4 = createSprite(673,192,10,10);
+	cop2 = createSprite(392,785,10,10);
+	cop3 = createSprite(138,660,10,10);
+	cop4 = createSprite(720,192,10,10);
 	cop5 = createSprite(426,193,10,10);
 
 	
+	cop1.velocityY = 1.5
+	cop2.velocityY = 1.5
+	cop3.velocityX = 2.5
+	cop4.velocityY = 1.5
+	cop5.velocityY = 4
 
 
 	gold1 = createSprite(183,335,10,10);
@@ -97,80 +114,128 @@ function setup() {
 
 
 function draw() { 
- // background(45,190,213);
-  rectMode(CENTER);
+	// background(45,190,213);
+	rectMode(CENTER);
 
-  
-
-  //robber display and making the robber move
-  robber.addImage(robberImg);
-  robber.scale = 0.20
-  robber.bounceOff(wall1);
-  robber.bounceOff(wall2);
-  robber.bounceOff(wall3);
-  robber.bounceOff(wall4);
-  robber.bounceOff(wall5);
-  robber.bounceOff(wall6);
-  robber.bounceOff(wall7);
-  robber.bounceOff(wall8);
-  robber.bounceOff(wall9);
-  robber.bounceOff(wall10);
-  robber.bounceOff(wall11);
-  robber.bounceOff(wall12);
-  robber.bounceOff(wall13);
-  robber.bounceOff(wall14);
-  robber.bounceOff(wall15);
-  robber.bounceOff(wall16);
-  robber.bounceOff(wall17);
+	//robber display and making the robber move
+	robber.addImage(robberImg);
+	robber.scale = 0.20
+	robber.bounceOff(wall1);
+	robber.bounceOff(wall2);
+	robber.bounceOff(wall3);
+	robber.bounceOff(wall4);
+	robber.bounceOff(wall5);
+	robber.bounceOff(wall6);
+	robber.bounceOff(wall7);
+	robber.bounceOff(wall8);
+	robber.bounceOff(wall9);
+	robber.bounceOff(wall10);
+	robber.bounceOff(wall11);
+	robber.bounceOff(wall12);
+	robber.bounceOff(wall13);
+	robber.bounceOff(wall14);
+	robber.bounceOff(wall15);
+	robber.bounceOff(wall16);
+	robber.bounceOff(wall17);
 
 
+	cop1.bounceOff(wall2)
+	cop1.bounceOff(wall5)
 
-  cop1.addImage(cop1img);
-  cop1.scale = 0.15
-  
-  cop2.addImage(cop2img);
-  cop2.scale = 0.15
-  cop3.addImage(cop1img);
-  cop3.scale = 0.15
-  cop4.addImage(cop2img);
-  cop4.scale = 0.15
-  cop5.addImage(cop1img);
-  cop5.scale = 0.15
+	cop2.bounceOff(wall2);
+	cop2.bounceOff(wall5);
 
-  gold1.addImage(goldImg)
-  gold1.scale = 0.175
+	cop3.bounceOff(wall1)
+	cop3.bounceOff(laser2)
 
-  gold2.addImage(goldImg);
-  gold2.scale = 0.175
+	cop4.bounceOff(wall4)
+	cop4.bounceOff(wall18)
 
-  gold3.addImage(goldImg);
-  gold3.scale = 0.175
-
-  gold4.addImage(goldImg);
-  gold4.scale = 0.175
-
-  diamond.addImage(diamondImg);
-  diamond.scale = 0.5
+	cop5.bounceOff(wall4);
+	cop5.bounceOff(wall17);
 
 
-  //reference for making sprites
-  fill("white");
-  console.log(mouseX + "," + mouseY, mouseX,mouseY);
-  
-  
+	cop1.addImage(cop1img);
+	cop1.scale = 0.15
+	cop2.addImage(cop1img);
+	cop2.scale = 0.15
+	cop3.addImage(cop1img);
+	cop3.scale = 0.15
+	cop4.addImage(cop1img);
+	cop4.scale = 0.15
+	cop5.addImage(cop1img);
+	cop5.scale = 0.15
 
-  if(gameState === 0) {
-	  	
-  }
- 
-  if(gameState === 1) {
-	 background(45, 190, 213)
+	gold1.addImage(goldImg)
+	gold1.scale = 0.175
+
+	gold2.addImage(goldImg);
+	gold2.scale = 0.175
+
+	gold3.addImage(goldImg);
+	gold3.scale = 0.175
+
+	gold4.addImage(goldImg);
+	gold4.scale = 0.175
+
+	diamond.addImage(diamondImg);
+	diamond.scale = 0.5
+
+	switch1.addImage(onimg);
+	switch1.scale = 0.05
+
+	switch2.addImage(onimg);
+	switch2.scale = 0.05
+
+	switch3.addImage(onimg);
+	switch3.scale = 0.05
+
+	switch4.addImage(onimg);
+	switch4.scale = 0.05
+	
+	switch5.addImage(onimg);
+	switch5.scale = 0.05
+	
+	switch6.addImage(onimg);
+	switch6.scale = 0.05
+	
 
 
-	 //sound1.play();
-	fill("black")
-  	textSize(25);
-  	text("Money: " + "$" + score,470,467);
+
+
+	//reference for making sprites
+	fill("white");
+	console.log(mouseX + "," + mouseY, mouseX,mouseY);
+	
+	
+
+	if(gameState === 0) {
+			
+	}	
+	
+	if(gameState === 1) {
+		background(45, 190, 213)
+
+
+		//sound1.play();
+		fill("black")
+		textSize(25);
+		text("Money: " + "$" + score,470,467);
+		text("Lives: " + lives,470,500)
+		text("1",125,326);
+		text("2",421,639);
+		text("3",863,169);
+		text("4",821,675);
+		text("5",782,900);
+		text("6",188,887);
+
+		textSize(20);
+		text("1",515,320);
+		text("2",600,320);
+		text("3",515,410);
+		text("4",600,410);
+		text("6",610,660);
+		text("5",700,660)
 		wall1.shapeColor = ("green");
 		wall2.shapeColor = ("green")
 		wall3.shapeColor = ("green")
@@ -188,69 +253,138 @@ function draw() {
 		wall15.shapeColor = ("green")
 		wall17.shapeColor = ("green")
 		wall16.shapeColor = ("green")
+		wall18.shapeColor = ("green")
+
+		laser1.shapeColor = ("red")
+		laser2.shapeColor = ("red")
+		laser3.shapeColor = ("red")
+		laser4.shapeColor = ("red")
+		laser5.shapeColor = ("red")
+				
+		//Making robber bounceOff of walls
+			
+
+		wall13.shapeColor = ("yellow")
+
+		if(keyIsDown(UP_ARROW)) {
+			robber.y = robber.y -4
+		}
+
+		if(keyIsDown(DOWN_ARROW)) {
+			robber.y = robber.y + 4
+		}
+
+		if(keyIsDown(LEFT_ARROW)) {
+			robber.x = robber.x - 4
+		}
+
+		if(keyIsDown(RIGHT_ARROW)) {
+			robber.x = robber.x + 4;
+		}
+
+		if(robber.isTouching(gold1)) {
+			gold1.x = 15000
+			score = score + 1000
+		}
+
+		if(robber.isTouching(gold2)) {
+			gold2.x = 15000
+			score = score + 1000
+		}
+
+		if(robber.isTouching(gold3)) {
+			gold3.x = 15000
+			score = score + 1000
+		}
+		if(robber.isTouching(gold4)) {
+			gold4.x = 15000
+			score = score + 1000
+		}
+			
+		if(robber.isTouching(diamond)) {
+			score = score + 6000
+			diamond.x = 15000
+		}
+
+
+
+
+		if(robber.isTouching(cop1) || robber.isTouching(cop3) || robber.isTouching(cop4) || robber.isTouching(cop5)) {
+			reset();
+		}
+
+		if(robber.isTouching(laser1) || robber.isTouching(laser2) || robber.isTouching(laser3) || robber.isTouching(laser4)|| robber.isTouching(laser5)) {
+			reset();
+		}
+
+		if(robber.isTouching(switch1)) {
+			switch1.addImage(offimg);
+			laser1.x = 150000;
+		}
+
+		if(robber.isTouching(switch2)) {
+			switch2.addImage(offimg);
+			laser3.x = 150000;
+		}
+
+		if(robber.isTouching(switch3)) {
+			switch3.addImage(offimg);
+			laser3.x = 150000;
+		}
+
+		if(robber.isTouching(switch4)) {
+			switch4.addImage(offimg);
+			laser4.x = 150000;
+		}
+
+		if(robber.isTouching(switch5)) {
+			switch5.addImage(offimg);
+			laser5.x = 150000;
+		}
+
+		if(robber.isTouching(switch6)) {
+			switch6.addImage(offimg);
+			wall13.velocityX = -4;
+		}
 
 		
+			
 
-	 //Making robber bounceOff of walls
-	 
 
-	 wall13.shapeColor = ("yellow")
-
-	 if(keyIsDown(UP_ARROW)) {
-		 robber.y = robber.y -4
-	 }
-
-	 if(keyIsDown(DOWN_ARROW)) {
-		 robber.y = robber.y + 4
-	 }
-
-	 if(keyIsDown(LEFT_ARROW)) {
-		 robber.x = robber.x - 4
-	 }
-
-	 if(keyIsDown(RIGHT_ARROW)) {
-		 robber.x = robber.x + 4;
-	 }
-
-	 if(robber.isTouching(gold1)) {
-		 gold1.x = 15000
-		 score = score + 1000
-	 }
-	 if(robber.isTouching(gold2)) {
-		gold2.x = 15000
-		score = score + 1000
 	}
-	if(robber.isTouching(gold3)) {
-		gold3.x = 15000
-		score = score + 1000
-	}
-	if(robber.isTouching(gold4)) {
-		gold4.x = 15000
-		score = score + 1000
-	}
-
-	
-		
-		//sound1.play();
-	
-
-	 if(robber.isTouching(diamond)) {
-		 score = score + 6000
-		 diamond.x = 15000
-	 }
-
-	 
-
-	 
-	 
-  }
   
-  drawSprites();
+	drawSprites();
 	
 }
 
+function reset(){
+	robber.x = 195
+	robber.y = 205
+	lives = lives - 1;
+
+	switch1.addImage(onimg);
+	switch2.addImage(onimg);
+	switch3.addImage(onimg);
+	switch4.addImage(onimg);
+	switch5.addImage(onimg);
+	switch6.addImage(onimg);
+
+	laser1.x = 240
+	laser1.y = 335
+
+	laser2.x = 389
+	laser2.y = 663
+
+	laser3.x = 823
+	laser3.y = 528
+
+	laser4.x = 747
+	laser4.y = 209
+
+	laser5.x = 665
+	laser5.x = 833
 
 
-
+}
 
 
